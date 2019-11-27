@@ -1,0 +1,39 @@
+import queue
+import threading
+import requests
+iplist=[]
+class socket1():
+    def __init__(self,i):
+        self.i=i
+    def scan(self,ip,i):
+        s=requests.get(ip,timeout=6)
+        if s.status_code==200:
+            iplist.append(ip)
+    def worker(self,q):
+        while not q.empty():
+            ip=str(q.get())
+            if ('http' or 'https') in ip:
+                ip=ip
+            else:
+                ip='http://'+ip
+            print(ip)
+            try:
+                self.scan(ip,self.i)
+            finally:
+                q.task_done()
+if __name__ == '__main__':
+    print("Start testing the target port")
+    filename='ip.txt'
+    q=queue.Queue()
+    a=socket1(80)
+    with open(filename,'rb') as f:
+        for line in f.readlines():
+            q.put(line.decode()[:-2])
+    threads=[threading.Thread(target=a.worker,args=(q,)) for i in range(200)]
+    list(map(lambda x:x.start(),threads))
+    q.join()
+    print("scan over")
+    print(iplist)
+    with open('ipsuccess.txt','w',encoding='utf-8') as f:
+        for i in iplist:
+            f.write(i+'\n')
