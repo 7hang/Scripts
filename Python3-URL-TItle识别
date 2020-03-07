@@ -1,0 +1,12 @@
+import requests
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+
+with open('url.txt') as f:
+    for url in f:
+        res = requests.get(url, verify=False)
+        print (res.text)
+        with open("out.txt", "w") as f1:
+            print (res.text,file = f1)
