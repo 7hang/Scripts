@@ -1,7 +1,7 @@
 import shodan
 import sys
 
-api=shodan.Shodan("cB9sXwb7l95ZhSJaNgcaO7NQpkzfhQVM")  
+api=shodan.Shodan("cB9sXwb7l9xxxxxxxxxxxxxQpkzfhQVM")  
 try:
     results=api.search('apache')    
     print(results)
